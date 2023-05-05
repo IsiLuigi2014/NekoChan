@@ -11,7 +11,7 @@ public class Danbooru {
     public final static char NONE = ' ';
     private static JSONObject startRequest(String tag, char rating) {
         try {
-            String baseurl = "https://testbooru.donmai.us/posts/random.json?tags=%s%s&page=%d";
+            String baseurl = "https://danbooru.donmai.us/posts/random.json?tags=%s%s";
             String rate = "";
             if (rating != ' ') rate = "&"+rating;
             baseurl = String.format(baseurl,tag, rate,Util.random(4242));
@@ -23,6 +23,10 @@ public class Danbooru {
         } catch (Exception ignored) {
             return new JSONObject("{}");
         }
+    }
+
+    public static String[] getYuri() {
+        return getRandomPicture("yuri+2girls");
     }
 
     //TODO
@@ -82,6 +86,10 @@ public class Danbooru {
             }
         }*/
         //file url, rating, file name
+        try {
         return new String[]{object.getString("file_url"), object.getString("rating") ,object.getString("md5")};
+        } catch (Exception e) {
+            return new String[]{};
+        }
     }
 }

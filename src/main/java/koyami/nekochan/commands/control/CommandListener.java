@@ -44,9 +44,15 @@ public class CommandListener extends ListenerAdapter {
                     if (parser.categories.get(args[0]).equals(CommandHandle.MOD_CATEGORY)) {
                         if (!modaccess) return;
                     }
-                    ((Command)parser.cmd.get(args[0]).getDeclaredConstructor().newInstance()).action(args,new MessageData(event,args[0]), event);
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                         NoSuchMethodException e) {
+                    new Thread(() -> {
+                        try {
+                            ((Command)parser.cmd.get(args[0]).getDeclaredConstructor().newInstance()).action(args,new MessageData(event,args[0]), event);
+                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                                 NoSuchMethodException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
 
