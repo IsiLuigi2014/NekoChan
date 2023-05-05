@@ -52,7 +52,7 @@ public class Util {
 
             String location = res.header("Location");
 
-            res = Jsoup.connect("http://pchome.megatime.com.tw/stock/sid1101.html")
+            res = Jsoup.connect(url)
                     .timeout(0)
                     .data("is_check", "1")
                     .method(Connection.Method.POST)
@@ -179,7 +179,25 @@ public class Util {
             e.printStackTrace();
         }
     }
+    public static byte[] downloadUrl(URL toDownload) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
+        try {
+            byte[] chunk = new byte[4096];
+            int bytesRead;
+            InputStream stream = toDownload.openStream();
+
+            while ((bytesRead = stream.read(chunk)) > 0) {
+                outputStream.write(chunk, 0, bytesRead);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return outputStream.toByteArray();
+    }
     public static int random(int timesx) {
         return (int) (Math.random() * timesx);
     }

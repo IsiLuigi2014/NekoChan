@@ -38,7 +38,7 @@ public class Konachan {
         }
     }
 
-    private static JSONObject getRandomPicture(String tag) {
+    public static JSONObject getRandomPicture(String tag) {
         return startRequest(tag,NONE,1).getJSONObject(0);
     }
 

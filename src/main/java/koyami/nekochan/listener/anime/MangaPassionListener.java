@@ -7,7 +7,6 @@ import koyami.nekochan.util.Settings;
 import koyami.nekochan.util.Util;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
-import org.apache.maven.plugin.logging.Log;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
