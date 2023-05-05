@@ -2,6 +2,7 @@ package koyami.nekochan.listener.anime;
 
 import koyami.nekochan.listener.timed.TimedListener;
 import koyami.nekochan.listener.timed.TimedListenerInterface;
+import koyami.nekochan.util.Logger;
 import koyami.nekochan.util.Settings;
 import koyami.nekochan.util.Util;
 import net.dv8tion.jda.api.JDA;
@@ -19,19 +20,19 @@ import java.util.Objects;
 
 @TimedListener(name = "animenachrichten2", time = 5 * 60)
 public class AnimeNachrichtenListener2 implements TimedListenerInterface {
-    private String lastNews = Settings.lastnewsanime;
     @Override
     public void action(JDA jda) {
         Document doc = Util.getDocument("https://www.animenachrichten.de/kategorie/nachrichten");
         if (doc == null) return;
         Elements elements = doc.getElementsByClass("td-category-grid").get(0).getElementsByClass("td-module-thumb");
-        if (lastNews == null) lastNews = elements.get(0).getElementsByAttribute("href").get(0).attr("title");
+        if (Settings.lastnewsanime == null) Settings.lastnewsanime = elements.get(0).getElementsByAttribute("href").get(0).attr("title");
         //Collections.reverse(elements);
-        int i = 0;
         for (Element element : elements) {
             String title = element.getElementsByAttribute("href").get(0).attr("title");
             String url = element.getElementsByAttribute("href").get(0).attr("href");
-            if (title.equals(lastNews)) {
+            //Logger.logDebug(title);
+            //Logger.logDebug(url);
+            if (title.equals(Settings.lastnewsanime)) {
                 break;
             }
             Document doc2 = Util.getDocument(url);
@@ -39,6 +40,7 @@ public class AnimeNachrichtenListener2 implements TimedListenerInterface {
             String imageUrl = doc2.getElementsByClass("td-ss-main-content").get(0).getElementsByTag("img").get(1).attr("src");
             String author = doc2.getElementsByClass("td-post-author-name").get(0).getElementsByTag("a").text();
             String time = convertTime(doc2.getElementsByClass("td-post-date").get(0).getElementsByTag("time").get(0).attr("datetime"));
+            Logger.logInfo("Send Animenews: " + title);
             for (Guild guild : jda.getGuilds()) {
                 guild.getTextChannelsByName(Settings.animenewschannel, true).get(0).sendMessageEmbeds(
                         Util.constructNewsEmbed(title,description,url,imageUrl,time,author).build()).complete();

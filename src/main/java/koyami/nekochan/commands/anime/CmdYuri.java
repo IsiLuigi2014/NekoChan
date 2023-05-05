@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-//TODO: Konachan class
 @CommandHandle(name = "yuri", args = " <count>",description = "sends yuri OwO", category = CommandHandle.ANIME_CATEGORY)
 public class CmdYuri implements Command {
 
@@ -27,7 +26,7 @@ public class CmdYuri implements Command {
     public void action(String[] args, MessageData data, MessageReceivedEvent event) {
         int i = 1;
         if (args.length >= 2) {
-            if (args[1].chars().allMatch(x -> Character.isDigit(x))) {
+            if (args[1].chars().allMatch(Character::isDigit)) {
                 i = Integer.parseInt(args[1]);
                 if (i > 50) i = 50;
             }
