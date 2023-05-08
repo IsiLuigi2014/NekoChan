@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Util {
     public static Document getDocument(String url) {
@@ -204,5 +205,10 @@ public class Util {
 
     public static Color randomColor() {
         return new Color((int) (Math.random() * 0x1000000));
+    }
+
+    public static String getConsoleInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }

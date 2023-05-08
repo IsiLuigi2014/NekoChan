@@ -33,6 +33,9 @@ public class Logger {
     public static void logError(String message) {
         log("ERROR", ANSI_RED, message);
     }
+    public static void logSpecial(String message) {
+        log("INFO", ANSI_PURPLE, message);
+    }
 
     private static void log(String type, String color, String message) {
         String calledClass = Thread.currentThread().getStackTrace()[3].getClassName();
