@@ -7,9 +7,9 @@ import java.io.IOException;
 public class Settings {
     //TODO: Everything put in a DataBase UwU
     public static String prefix = "-";
-    public static String animenewschannel = "anime-news";
+    //public static String animenewschannel = "anime-news";
     public static String lastnewsanime = null;
-    public static String manganewschannel = "anime-news";
+    //public static String manganewschannel = "anime-news";
     public static String lastnewsmanga = null;
 
     private static String filepath = "./settings.json";

@@ -152,6 +152,10 @@ public class Util {
         return channel.sendMessage(message).complete();
     }
 
+    public static Message sendMessage(TextChannel channel, char message) {
+        return channel.sendMessage(String.valueOf(message)).complete();
+    }
+
     public static String readHTML(String url) {
         StringBuilder html = new StringBuilder();
         try (InputStream input = new URL(url).openStream()) {

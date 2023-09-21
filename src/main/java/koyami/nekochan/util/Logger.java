@@ -1,7 +1,9 @@
 package koyami.nekochan.util;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class Logger {
     //ANSI escape codes: https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
@@ -15,8 +17,8 @@ public class Logger {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    //TODO: Logging level
-    public static String loggingLevel;
+    public static boolean writeToFile = true;
+    private static final String filepath = "./log.txt";
 
     public static void logDebug(String message) {
         log("DEBUG", ANSI_WHITE, message);
@@ -33,6 +35,7 @@ public class Logger {
     public static void logError(String message) {
         log("ERROR", ANSI_RED, message);
     }
+
     public static void logSpecial(String message) {
         log("INFO", ANSI_PURPLE, message);
     }
@@ -40,6 +43,21 @@ public class Logger {
     private static void log(String type, String color, String message) {
         String calledClass = Thread.currentThread().getStackTrace()[3].getClassName();
         String datetime = Util.getTime();
-        System.out.printf("%s[%s] %s %s - %s%s%n", color, datetime, calledClass,type, message, ANSI_RESET);
+        String out = String.format("%s[%s] %s %s - %s%s%n", color, datetime, calledClass, type, message, ANSI_RESET);
+        System.out.print(out);
+        if (writeToFile) {
+            if (!Util.fileExist(filepath)) {
+                try {
+                    Util.writeFile("", filepath);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            try {
+                Files.write(Paths.get(filepath), out.getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

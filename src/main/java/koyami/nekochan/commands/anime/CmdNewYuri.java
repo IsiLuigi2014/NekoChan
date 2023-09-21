@@ -35,7 +35,7 @@ public class CmdNewYuri implements Command {
     private void sendYuri(MessageData data) {
         String[] picdata = Danbooru.getYuri();
         if (picdata.length == 0) {
-            Util.sendMessage(data.textchannel, "Nekochan kann das nächste Yuri-Pic nicht finden *sad >w<*");
+            Util.sendMessage(data.textchannel, "Nekochan kann das nächste Yuri-Pic nicht finden *sad >w<*").delete().queueAfter(3, TimeUnit.MINUTES);;
             return;
         }
         if (!data.textchannel.isNSFW()) if (picdata[1].equals("q") || picdata[2].equals("e")) {
@@ -47,10 +47,10 @@ public class CmdNewYuri implements Command {
         try {
             img = Util.downloadUrl(new URL(picdata[0]));
         } catch (Exception e) {
-            Util.sendMessage(data.textchannel, "Nekochan kann das Yuri Pic leider nicht downloaden *sad >w<*");
+            Util.sendMessage(data.textchannel, "Nekochan kann das Yuri Pic leider nicht downloaden *sad >w<*").delete().queueAfter(3, TimeUnit.MINUTES);;
             return;
         }
-        data.textchannel.sendMessage("Yuri-Pics~").addFiles(FileUpload.fromData(img,picdata[2] + ".jpg")).complete();
+        data.textchannel.sendMessage("Yuri-Pic~").addFiles(FileUpload.fromData(img,picdata[2] + ".jpg")).complete();
         Util.sleep(1);
     }
 }

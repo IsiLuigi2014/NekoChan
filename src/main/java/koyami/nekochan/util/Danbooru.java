@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 //TODO: https://testbooru.donmai.us/posts.json?tags=yuri programming
 public class Danbooru {
+    //https://testbooru.donmai.us/posts/random.json?tags=yuri+rating:e&only=file_url,rating,md5,id&search[order]=custom
     public final static char SAFE = 'g';
     public final static char QUESTIONABLE = 'q';
     public final static char EXPLICIT = 'e';
@@ -15,9 +16,9 @@ public class Danbooru {
             String rate = "";
             if (rating != ' ') rate = "&"+rating;
             baseurl = String.format(baseurl,tag, rate,Util.random(4242));
-            Logger.logDebug(baseurl);
+            //Logger.logDebug(baseurl);
             String request = Util.readHTML(baseurl);
-            Logger.logDebug(request);
+            //Logger.logDebug(request);
             if (request.startsWith("{\"success\":false")) return new JSONObject("{}");
             else return new JSONObject(request);
         } catch (Exception ignored) {

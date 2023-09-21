@@ -69,7 +69,7 @@ public class Manga2YouListener implements TimedListenerInterface {
                 String author = doc.getElementsByClass("post-author").get(0).getElementsByTag("a").text();
                 String time = convertTime(doc.getElementsByClass("meta-item date").get(0).getElementsByTag("time").get(0).attr("datetime"));
                 for (Guild guild : jda.getGuilds()) {
-                    guild.getTextChannelsByName(Settings.manganewschannel, true).get(0).sendMessageEmbeds(
+                    guild.getTextChannelsByName(Settings.getMangaNewsChannel(), true).get(0).sendMessageEmbeds(
                             Util.constructNewsEmbed(news[0][it],description,news[1][it],imageUrl,time,author).build()).queueAfter(250, TimeUnit.MILLISECONDS);
                     Util.logDebugFileAppend("Sending news: " + news[0][it]);
                     Util.sleep(2);

@@ -45,7 +45,7 @@ public class AnimeNachrichtenListener implements TimedListenerInterface {
                 String author = doc.getElementsByClass("td-post-author-name").get(0).getElementsByTag("a").text();
                 String time = convertTime(doc.getElementsByClass("td-post-date").get(0).getElementsByTag("time").get(0).attr("datetime"));
                 for (Guild guild : jda.getGuilds()) {
-                    guild.getTextChannelsByName(Settings.animenewschannel, true).get(0).sendMessageEmbeds(
+                    guild.getTextChannelsByName(Settings.getAnimeNewsChannel(), true).get(0).sendMessageEmbeds(
                             Util.constructNewsEmbed(news[0][it],description,news[1][it],imageUrl,time,author).build()).complete();
                 }
             }
